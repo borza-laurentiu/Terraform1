@@ -43,7 +43,7 @@ resource "aws_subnet" "DemoPublicSubnet" { //create the subnet
 resource "aws_security_group" "sgPublic" { // in the application layer
   name        = "app-sg"
   description = "public access"
-  vpc_id      = aws_vpc.DemoVPC.id
+  vpc_id      = var.vpc_id      // previous value aws_vpc.DemoVPC.id
 
   ingress { //http access
     description = "allow traffic from port 22"
@@ -81,10 +81,10 @@ resource "aws_route_table_association" "publicSubAssoc" { //associate it with th
 }
 
 resource "aws_instance" "TestMachine" {
-  ami                      = var.ami_id
+  ami                         = var.ami_id
   instance_type               = "t2.micro"
   key_name                    = var.ssh_key
-  subnet_id                   = aws_subnet.DemoPublicSubnet.id
+  subnet_id                   = var.subnet_id      // previous value: aws_subnet.DemoPublicSubnet.id
   vpc_security_group_ids       = [aws_security_group.sgPublic.id]
   associate_public_ip_address = true       //to be able to access our instance via SSH
 
