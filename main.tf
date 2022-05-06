@@ -60,6 +60,14 @@ resource "aws_security_group" "sgPublic" { // in the application layer
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress { 
+    description = "allow traffic from port 443"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_route_table" "DemoRouteTable" {
@@ -90,5 +98,18 @@ resource "aws_instance" "TestMachine" {
 
   tags = {
     Name = "${var.name}.tf.TestMachine"
+  }
+}
+
+resource "aws_instance" "TestOutputMachine" {
+  ami                         = var.ami_id
+  instance_type               = "t2.micro"
+  key_name                    = var.ssh_key
+  subnet_id                   = var.subnet_id      
+  vpc_security_group_ids       = [aws_security_group.sgPublic.id]
+  associate_public_ip_address = true       
+
+  tags = {
+    Name = "${var.name}.tf.TestOutputMachine"
   }
 }
