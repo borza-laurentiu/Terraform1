@@ -60,6 +60,14 @@ resource "aws_security_group" "sgPublic" { // in the application layer
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress { 
+    description = "allow traffic from port 443"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_route_table" "DemoRouteTable" {
@@ -92,3 +100,4 @@ resource "aws_instance" "TestMachine" {
     Name = "${var.name}.tf.TestMachine"
   }
 }
+

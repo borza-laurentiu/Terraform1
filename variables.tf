@@ -14,7 +14,7 @@ variable "ami_id" {
 }
 variable "ssh_key" {
   type    = string
-  default = "New_Key"
+  default = "New-Key"
 }
 variable "vpc_id" {
   type    = string
