@@ -45,7 +45,7 @@ resource "aws_security_group" "sgPublic" { // in the application layer
   description = "public access"
   vpc_id      = var.vpc_id      // previous value aws_vpc.DemoVPC.id
 
-  ingress { //http access
+  ingress { //ssh access
     description = "allow traffic from port 22"
     from_port   = 22
     to_port     = 22
@@ -53,7 +53,7 @@ resource "aws_security_group" "sgPublic" { // in the application layer
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress { //ssh access
+  ingress { //http access
     description = "allow traffic from port 80"
     from_port   = 80
     to_port     = 80
